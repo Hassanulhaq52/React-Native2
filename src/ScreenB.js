@@ -22,7 +22,7 @@ export default function ScreenB({navigation}){
         <Text style = {styles.text}> Screen B</Text>
         <Pressable 
         onPress={onPressHandler} 
-        style = {({ pressed}) => ({backgroundColor: pressed? '#ddd': '#0f0'})}>
+        style = {({ pressed}) => ({backgroundColor: pressed? '#0a79a8': '#5edaff'})}>
         
           <Text 
           style= {styles.text}>
@@ -42,7 +42,7 @@ export default function ScreenB({navigation}){
     },
   
   text:{
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: 'bold',
     margin: 5,
     
