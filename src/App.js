@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 // import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 // import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import ScreenA from './ScreenA';
-import ScreenB from './ScreenB';
+import ScreenA from './screens/ScreenA';
+import ScreenB from './screens/ScreenB';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import{
   StyleSheet,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,27 +12,57 @@ import{
 
 } from 'react-native';
 
+import GlobalStyle from './utils/GlobalStyle'
+
 export default function ScreenA({navigation, route}){
 
+const Users = [
+{
+  id: 1,
+  name: 'user A'
+}, 
 
+{
+  id: 1,
+  name: 'user B'
+}, 
+
+{
+  id: 1,
+  name: 'user C'
+}, 
+
+];
+
+const [name, setName] = useState('');
 
     const  onPressHandler = () =>{
-    navigation.navigate('Screen_B');
+      
+    // navigation.navigate('Screen_B');
     // navigation.openDrawer();
+
+    for(let user of Users){
+      setName(user.name);
+    }
     }
     
       return(
         <View style = {styles.body}>
-          <Text style = {styles.text}> Screen A</Text>
+          <Text style = {
+            // GlobalStyle.CustomFont,
+            styles.text1
+          }
+            > 
+            Screen A</Text>
           
           <Pressable 
           onPress={onPressHandler} 
           style = {({ pressed}) => ({backgroundColor: pressed? '#0a79a8': '#5edaff'})}>
           
-            <Text style= {styles.text}>Go to Screen B</Text>
+            <Text style= {styles.button}>Get the Last User</Text>
           </Pressable>
 
-          <Text style = {styles.text}>{route.params?. Message}</Text>
+          <Text style = {styles.text}>{name}</Text>
 
 
         </View>
@@ -50,7 +80,21 @@ export default function ScreenA({navigation, route}){
         fontSize: 40,
         fontWeight: 'bold',
         margin: 5,
+       
+      },
+
+      text1:{
+        fontSize: 70,
+        // fontWeight: 'bold',
+        margin: 10,
+        fontFamily: 'SquarePeg-Regular',
         
+      },
+
+      button:{
+        fontFamily: 'Tapestry-Regular',
+        fontSize: 35,
+        padding: 10
       }
       
       })    

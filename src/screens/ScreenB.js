@@ -23,13 +23,15 @@ export default function ScreenB({navigation, route}){
     }
     return(
       <View style = {styles.body}>
-        <Text style = {styles.text}> Screen B</Text>
+        <Text style = {styles.text1}> Screen B</Text>
         <Pressable 
         onPress={onPressHandler} 
         style = {({ pressed}) => ({backgroundColor: pressed? '#0a79a8': '#5edaff'})}>
         
           <Text 
-          style= {styles.text}>
+          style= {
+          styles.button
+          }>
             Go Back to Screen A
             
             </Text>
@@ -54,8 +56,22 @@ export default function ScreenB({navigation, route}){
   text:{
     fontSize: 35,
     fontWeight: 'bold',
-    margin: 5,
+    margin: 10,
     
+  },
+
+  text1:{
+    fontSize: 70,
+    // fontWeight: 'bold',
+    margin: 10,
+    fontFamily: 'SquarePeg-Regular',
+    
+  },
+  
+  button:{
+    fontFamily: 'Tapestry-Regular',
+    fontSize: 35,
+    padding: 10
   }
   
   }) 
