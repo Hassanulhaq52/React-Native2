@@ -183,12 +183,13 @@ return(
     <View
     style = {styles.body}
     >
-<Image
+
+{/* <Image
 
 style= {styles.logo}
 source= {require('../../assets/redux.png')}
 
-/>
+/> */}
 
 <Text style = {styles.text}
 

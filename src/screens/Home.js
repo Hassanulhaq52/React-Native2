@@ -15,10 +15,10 @@ import {
 
 import GlobalStyle from './utils/GlobalStyle'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput } from 'react-native-gesture-handler';
+import { FlatList, TextInput } from 'react-native-gesture-handler';
 import SQLite from 'react-native-sqlite-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import { setName, setAge, increaseAge } from '../redux/actions';
+import { setName, setAge, increaseAge, getCities } from '../redux/actions';
 
 const db = SQLite.openDatabase(
 
@@ -37,7 +37,7 @@ const db = SQLite.openDatabase(
 
 export default function Home({ navigation, route }) {
 
-  const {name, age} = useSelector(state => state.userReducer);
+  const {name, age, cities} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
   // const [name, setName] = useState('');
@@ -46,6 +46,7 @@ export default function Home({ navigation, route }) {
   useEffect(() => {
 
     getdata();
+    dispatch(getCities());
 
   }, []);
 
@@ -204,7 +205,25 @@ export default function Home({ navigation, route }) {
 
       </Text>
 
-      <Text style={
+<FlatList 
+
+data = {cities}
+renderItem = {({ item }) => ( 
+
+<View style= {styles.item}> 
+
+<Text style= {styles.title}> {item.name} </Text>
+<Text style= {styles.subtitle} > {item.city} </Text>
+
+</View>
+
+)}
+
+keyExtractor = {(item, index) => index.toString()}
+
+/>
+
+      {/* <Text style={
         // GlobalStyle.CustomFont,
         styles.text1
       }
@@ -252,7 +271,7 @@ title='Increase Age'
 color='#46bdf0'
 onPressFunction = { () => {dispatch(increaseAge())} }
 
-/>
+/> */}
 
     </View>
   )
@@ -311,6 +330,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 50,
     marginBottom: 20
-  }
+  },
+
+  item: {
+
+    backgroundColor: '#ffffff',
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    borderRadius: 5,
+    margin: 7,
+    width: 350,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+
+title: {
+
+  fontSize: 40,
+  margin: 5,
+  // fontWeight: 'bold',
+  fontFamily:'WaterBrush-Regular'
+},
+
+subtitle: {
+
+  fontSize: 30,
+  margin: 10,
+  color: '#999999',
+  fontFamily: 'SquarePeg-Regular',
+}
 
 })    
