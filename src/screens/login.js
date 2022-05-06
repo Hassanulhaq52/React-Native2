@@ -13,6 +13,23 @@ import{
 import { TextInput } from 'react-native-gesture-handler';
 import CustomButton from './utils/customButton';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SQLite from 'react-native-sqlite-storage';
+
+
+const db = SQLite.openDatabase(
+
+{
+
+  name: 'MainDB',
+  location: 'default',
+
+},
+
+() => {},
+
+error => { console.log(error)}
+
+);
 
 export default function Login({navigation}){
 
@@ -20,24 +37,63 @@ const [name, setName] = useState('');
 const [age, setAge] = useState('');
 
 useEffect(() => {
-
+  createTable();
   getdata();
 
 }, []);
 
+const createTable = () => {
+
+db.transaction((tx) => {
+
+tx.executeSql(
+
+"CREATE TABLE IS NOT EXISTS "
++ "Users "
++ "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER); "
+
+)
+  
+})
+
+}
 
 const getdata = () =>{
 
 try {
 
-AsyncStorage.getItem('UserData')
+// AsyncStorage.getItem('UserData')
 
-.then ( value => {
+// .then ( value => {
 
-  if (value!= null)
-  {
-  navigation.navigate("Home");
-  }
+//   if (value!= null)
+//   {
+//   navigation.navigate("Home");
+//   }
+
+// })
+
+
+db.transaction((tx) => {
+
+  tx.executeSql(
+
+    "SELECT Name, Age FROM Users",
+    [],
+
+    (tx, results) => {
+
+      var len = results.rows.length;
+
+      if (len > 0) {
+
+        navigation.navigate("Home");
+   
+      }
+
+    }
+
+  );
 
 })
 
@@ -72,14 +128,32 @@ else
 
 try {
   
-var user = {
+// var user = {
 
-Name: name,
-Age: age
+// Name: name,
+// Age: age
 
-}
+// }
 
-await AsyncStorage.setItem('UserData', JSON.stringify(user));
+// await AsyncStorage.setItem('UserData', JSON.stringify(user));
+
+await db.transaction(async (tx) => {
+
+// await tx.executeSql(
+  
+//   "INSERT INTO Users (Name, Age) VALUES ('" + name + "', " + age + ") "
+  
+//   );
+
+await tx.executeSql(
+  
+  "INSERT INTO Users (Name, Age) VALUES (?, ?) ",
+  [name, age]
+  
+  );
+
+  })
+
 navigation.navigate('Home');
 
 } 
@@ -104,14 +178,14 @@ return(
 <Image
 
 style= {styles.logo}
-source= {require('../../assets/asyncStorage.png')}
+source= {require('../../assets/sqlite3.png')}
 
 />
 
 <Text style = {styles.text}
 >
 
-Async Storage    
+  
 
 </Text>
 
@@ -155,9 +229,9 @@ onPressFunction= {setData}
     },
 
     logo: {
-        height: 100,
-        width: 100,
-        margin: 20
+        height: 150,
+        width: 150,
+        margin: 10
     },
 
     text: {
@@ -180,8 +254,7 @@ onPressFunction= {setData}
     },
 
     button: {
-    
-      marginBottom: 20,
+  
       borderRadius: 5
     },
 
