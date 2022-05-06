@@ -6,13 +6,15 @@ import { NavigationContainer } from '@react-navigation/native';
 // import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Home from './screens/Home';
 import Login from './screens/login';
+import { Provider } from 'react-redux';
+import { Store } from './redux/store';
 
-import{
+import {
   StyleSheet,
   Text,
   View,
   Pressable,
-  
+
 } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -25,48 +27,53 @@ const Stack = createStackNavigator();
 function App() {
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-initialRouteName='Login'
-      screenOptions={{
 
-        headerTitleAlign: 'center',
-    
-        headerStyle: {
-backgroundColor: '#279be8'
-},
-headerTintColor: '#ffffff',
+    <Provider store= {Store}>
 
-headerTitleStyle: {
-  fontSize: 25,
-  fontWeight: 'bold',
-  
-},
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName='Login'
+          screenOptions={{
 
-      }}
-    
-      >
-        <Stack.Screen
-          name='Login'
-          component={Login}
+            headerTitleAlign: 'center',
 
-        options = {{
+            headerStyle: {
+              backgroundColor: '#279be8'
+            },
+            headerTintColor: '#ffffff',
 
-headerShown: false
+            headerTitleStyle: {
+              fontSize: 25,
+              fontWeight: 'bold',
 
-      }} 
+            },
 
-        />
+          }}
 
-        <Stack.Screen
-          name='Home'
-          component={Home}
+        >
+          <Stack.Screen
+            name='Login'
+            component={Login}
 
-        />
+            options={{
 
-      </Stack.Navigator>
+              headerShown: false
 
-    </NavigationContainer>
+            }}
+
+          />
+
+          <Stack.Screen
+            name='Home'
+            component={Home}
+
+          />
+
+        </Stack.Navigator>
+
+      </NavigationContainer>
+
+    </Provider>
 
   )
 }

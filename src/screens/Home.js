@@ -17,6 +17,8 @@ import GlobalStyle from './utils/GlobalStyle'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextInput } from 'react-native-gesture-handler';
 import SQLite from 'react-native-sqlite-storage';
+import { useSelector, useDispatch } from 'react-redux';
+import { setName, setAge, increaseAge } from '../redux/actions';
 
 const db = SQLite.openDatabase(
 
@@ -35,9 +37,11 @@ const db = SQLite.openDatabase(
 
 export default function Home({ navigation, route }) {
 
+  const {name, age} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  // const [name, setName] = useState('');
+  // const [age, setAge] = useState('');
 
   useEffect(() => {
 
@@ -82,8 +86,8 @@ export default function Home({ navigation, route }) {
 
             var userName = results.rows.item(0). Name;
             var userAge = results.rows.item(0). Age;
-            setName(userName);
-            setAge(userAge);
+            dispatch(setName(userName));
+            dispatch(setAge(userAge));
 
             }
 
@@ -215,7 +219,7 @@ export default function Home({ navigation, route }) {
         style={styles.input}
         placeholder='Enter Your Name'
         value={name}
-        onChangeText={(value) => setName(value)}
+        onChangeText={(value) =>  dispatch(setName(value))}
 
       />
 
@@ -240,6 +244,15 @@ export default function Home({ navigation, route }) {
         onPressFunction={removeData}
 
       />
+
+<CustomButton
+
+style={styles.button2}
+title='Increase Age'
+color='#46bdf0'
+onPressFunction = { () => {dispatch(increaseAge())} }
+
+/>
 
     </View>
   )
@@ -281,8 +294,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Tapestry-Regular',
     fontSize: 35,
     padding: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    marginBottom: 15,
+    
   },
+
+  
 
   input: {
     width: 300,
