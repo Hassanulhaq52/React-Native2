@@ -8,17 +8,20 @@ import {
   Text,
   View,
   Pressable,
-  Alert
+  Alert,
+
 
 
 } from 'react-native';
 
 import GlobalStyle from './utils/GlobalStyle'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import SQLite from 'react-native-sqlite-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { setName, setAge, increaseAge, getCities } from '../redux/actions';
+// import PushNotification from "react-native-push-notification";
+
 
 const db = SQLite.openDatabase(
 
@@ -192,7 +195,17 @@ export default function Home({ navigation, route }) {
 
   }
 
+// const handleNotification = (item) => {
 
+// PushNotification.localNotification({
+
+//   channelId: 'test-channel',
+//   title: 'You Clicked On' + item.country,
+//   message: item.city
+
+// })
+
+// }
 
   return (
     <View style={styles.body}>
@@ -210,13 +223,19 @@ export default function Home({ navigation, route }) {
 data = {cities}
 renderItem = {({ item }) => ( 
 
+// {/* <TouchableOpacity
+
+// onPress = {() => { handleNotification(item) }}
+
+// > */}
+
 <View style= {styles.item}> 
 
 <Text style= {styles.title}> {item.name} </Text>
 <Text style= {styles.subtitle} > {item.city} </Text>
 
 </View>
-
+// </TouchableOpacity>  
 )}
 
 keyExtractor = {(item, index) => index.toString()}
